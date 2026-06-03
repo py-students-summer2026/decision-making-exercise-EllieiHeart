@@ -13,7 +13,8 @@ def roll_die():
 
     :returns: the pseudo-random integer.
     """
-    # complete this function below here
+    dice = random.randint(1, 6)
+    return dice
 
 
 def get_question_type():
@@ -23,10 +24,15 @@ def get_question_type():
 
     :returns: "sum" for an addition question, "difference" for a subtraction question.
     """
-    # complete this function below here
+    question = random.randint(1, 6)
+    if question <= 3:
+        return "sum"
+    else:
+        return "difference"
+    
 
 
-def print_question(die_1_value, die_2_value, question_type):
+def print_question(dice_1, dice_2, question):
     """
     Prints out a math question that asks the user to calculate either the sum or difference of the two numbers rolled on virtual dice.
 
@@ -42,7 +48,12 @@ def print_question(die_1_value, die_2_value, question_type):
     :param question_type: A string - either "sum" or "difference" - indicating whether the user should calculate the sum or difference of the two integers.
     :returns: None
     """
-    # complete this function below here
+    if question == "sum":
+        print(f"You rolled a {dice_1} and a {dice_2}... What is the sum of {dice_1} and {dice_2}? ")
+    elif question == "difference":
+        print(f"You rolled a {dice_1} and a {dice_2}... What is the difference between {dice_1} and {dice_2}? ")
+    else:
+        return None
 
 
 def input_answer():
@@ -55,7 +66,12 @@ def input_answer():
 
     :returns: The user's answer, as an int, if valid; or -1 if the user's response was not valid.
     """
-    # complete this function below here
+    answer = input("Whats your answer?: ").strip() 
+    if answer == "" or not answer.isnumeric():
+        return -1
+    else:
+        return int(answer)
+    
 
 
 def is_correct_answer(die_1_value, die_2_value, question_type, given_answer):
@@ -68,7 +84,21 @@ def is_correct_answer(die_1_value, die_2_value, question_type, given_answer):
     :param question_type: A string - either "sum" or "difference" - indicating whether the user was asked to add or subtract the two integers.
     :returns: True if the user's given answer is correct, False otherwise.
     """
-    # complete this function below here
+
+    if question_type == "sum":
+        correct = die_1_value + die_2_value
+    elif question_type == "difference":
+        if die_1_value > die_2_value:
+            correct = die_1_value - die_2_value
+        else:
+            correct = die_2_value - die_1_value
+    else:
+        return False  # if question_type is anything unexpected, just return False
+
+    if given_answer == correct:
+        return True
+    else:
+        return False
 
 
 def print_congratulations(question_type):
@@ -81,7 +111,10 @@ def print_congratulations(question_type):
 
     :param question_type: A string - either "sum" or "difference" - indicating whether the user was asked to add or subtract the two integers.
     """
-    # complete this function below here
+    if question_type == "sum":
+        print("Yes! Congratulations on the successful addition!")
+    else:
+        print("Yes! Congratulations on the successful subtraction!")
 
 
 def print_correct_answer(die_1_value, die_2_value, question_type):
@@ -96,7 +129,14 @@ def print_correct_answer(die_1_value, die_2_value, question_type):
     :param die_2_value: The second integer.
     :param question_type: A string - either "sum" or "difference" - indicating whether the user was asked to add or subtract the two integers.
     """
-    # complete this function below here
+    if question_type == "sum":
+        print(f"No! The sum of {die_1_value} and {die_2_value} is {die_1_value + die_2_value}!")
+    elif question_type == "difference":
+        if die_1_value > die_2_value:
+            print(f"No! The difference between {die_1_value} and {die_2_value} is {die_1_value - die_2_value}!")
+        else:
+            print(f"No! The difference between {die_1_value} and {die_2_value} is {die_2_value - die_1_value}!")
+
 
 
 def print_error_message():
@@ -106,4 +146,4 @@ def print_error_message():
     Follow the given format:
     - "Sorry - that is an invalid answer.  Bye Bye!"
     """
-    # complete this function below here
+    print("Sorry - that is an invalid answer.  Bye Bye!")
